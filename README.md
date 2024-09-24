@@ -2,47 +2,56 @@
 # WordPress Project
 
 This is a WordPress installation located in the `wordpress2` directory. This project contains various files and directories essential for running a WordPress site.
+1. UPDATE SERVER
+   sudo apt update && sudo apt upgrade
 
-## Directory Structure
+2. INSTALL APACHE
+   sudo install apache2
 
-- `index.html`: Default landing page. This can be used for static content before the WordPress site is set up.
-- `license.txt`: License information for WordPress, outlining the terms under which it can be used.
-- `latest.tar.gz`: Compressed archive of the latest WordPress version, which can be used for manual installations or upgrades.
-- `readme.html`: Default readme file provided by WordPress. It contains information about the installation and configuration.
-- `wordpress2/`: Main directory containing WordPress files (if not already organized).
-  - `wp-admin/`: Contains all the files necessary for the WordPress admin dashboard, where you manage your site.
-  - `wp-content/`: Contains themes, plugins, and uploaded media files.
-  - `wp-includes/`: Contains the core files needed for WordPress to run, including functions and classes.
-- `wp-blog-header.php`: Loads the WordPress environment and template. It is often included in front-end pages.
-- `wp-config-sample.php`: Sample configuration file for WordPress. You should rename this to `wp-config.php` and configure it with your database settings.
-- `wp-links-opml.php`: Generates an OPML file of your blogroll links for easy export/import.
-- `wp-login.php`: Handles user login requests and authentication.
-- `wp-settings.php`: Initializes WordPress and sets up the environment for the site to run.
-- `wp-trackback.php`: Handles trackbacks, which are a way for authors to be notified when their content is linked to by others.
-- `wp-activate.php`: Manages user account activation for multisite installations.
-- `wp-comments-post.php`: Handles posting comments on your blog posts.
-- `wp-cron.php`: Manages scheduled tasks for WordPress, like publishing scheduled posts.
-- `wp-load.php`: Loads the WordPress environment and template for executing requests.
-- `wp-mail.php`: Handles email sending through the WordPress system.
-- `wp-signup.php`: Manages user sign-up for multisite installations.
-- `xmlrpc.php`: Enables remote access to WordPress through XML-RPC protocol.
+3. START AND ENABLE APACHE
+   sudo systemctl start apache2
+   sudo systemctl enable apache2
 
-## Installation Instructions
+4. INSTALL MYSQL
+   sudo apt install mysql-server
 
-1. **Clone or Download the Repository**:
-   Clone the repository or download the ZIP file containing the WordPress files.
+5. SECURE THE MYSQL INSTALLATION
+   sudo mysql_secure_installation
 
-2. **Set Up the Database**:
-   Create a new MySQL database for WordPress.
+6. INSTALL PHP
+   sudo apt install php libapache2-mod-php php-mysql
 
-3. **Configure WordPress**:
-   - Rename `wp-config-sample.php` to `wp-config.php`.
-   - Update `wp-config.php` with your database credentials (database name, username, password).
+7. INSTALL ADDITIONAL PHP EXTENSIONS
+   sudo apt install php-xml php-mbstring php-curl php-zip
 
-4. **Access Your Site**:
-   Open your web browser and navigate to `http://your-server-ip/wordpress2` to complete the installation through the web interface.
+8. LOGIN TO MYSQL
+   sudo mysql -u root -p
+ 
+9. CREATE DATABASE AND USER
+   CREATE DATABASE wordpress;
+   CREATE USER 'wordpress'@'localhost' IDENTIFIED BY 'My-password@1234';
+   GRANT ALL PRIVILEGES ON wordpress.* TO 'wordpress'@'localhost';
+   FLUSH PRIVILEGES;
+   EXIT;
 
-## License
+10. DOWNLOAD WORDPRESS
+    cd /var/www/html
+    sudo wget https://wordpress.org/latest.tar/gz
+    sudo tar -xzvf latest.tar.gz
+    
+11. CONFIGURE PERMISSIONS
+    sudo chown -R www-data:www-data /var/www/html/wordpress
+    sudo chmod -R 755 /var/www/html/wordpress
 
-This project is licensed under the MIT License. See `license.txt` for more details.
+12. CONFIGURE WORDPRESS
+    sudo cp wp-config-sample.php wp-config.php
 
+13. EDIT WP-CONFIG.PHP
+    sudo vim wp-config.php
+
+14. UPDATE DATABASE SETTINGS
+    define('DB_NAME', 'wordpress');
+    deFine('DB_USER', 'wordpress);
+    define('DB_PASSWORD', 'My-password@1234');
+
+ 
